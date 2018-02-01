@@ -38,7 +38,7 @@ color_t point_light_t::direct(const Vector3f& hitpt, const Vector3f& normal, con
 	color_t specular(0.0);
 
 	if(!in_shadow) {
-		diffuse = multiply_color_t_vector3f(kd,col * incident.dot(normal)).clamp();
+		diffuse = multiply_color_t_vector3f(kd,std::max(col * incident.dot(normal),0.0));
 		specular = multiply_color_t_vector3f(ks,col * pow(std::max(double(reflected.dot(view)),0.0),mat -> get_shininess()));
 	}
 	color_t total = ambient + diffuse + specular;

@@ -54,6 +54,7 @@ color_t whitted_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int& d)
 		} else {							//exiting the object
 			nr = mat->get_eta();
 			normal = -normal;
+			incident_dot_normal = -incident_dot_normal;
 									// printf("%s %f\n","hello",incident_dot_normal );
 		}
 
