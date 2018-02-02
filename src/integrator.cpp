@@ -4,11 +4,10 @@
 
 using namespace rt;
 
-int max_depth = 4;
 color_t whitted_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int& d) const
 {
-	if(d > max_depth) 
-		return color_t(0.0);
+	if(d > depth) 
+		return _scn->img->get_bgcolor();
 	int depth = d+1;
 	bool found_intersection=false;
 	std::vector<object_t*>::const_iterator oit;
@@ -63,9 +62,9 @@ color_t whitted_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int& d)
 
 		float D = 1 - (nr * nr *(1 - incident_dot_normal*incident_dot_normal));
 		if(D >= 0.0){				//normal refraction
-			transmitted = nr * incident - (nr * incident_dot_normal + sqrt(D)) * normal;
+			transmitted = (nr * incident - (nr * incident_dot_normal + sqrt(D)) * normal).normalized();
 			transmitted_ray = ray_t(hitpt - epsilon * normal ,transmitted);
-			d_col += mat->get_reflect() * radiance(_scn,reflected_ray,depth) + mat->get_transmit() * radiance(_scn,transmitted_ray,depth);
+			d_col += mat->get_reflect() * radiance(_scn,reflected_ray,depth);// + mat->get_transmit() * radiance(_scn,transmitted_ray,depth);
 		} else {					//TIR
 			d_col += radiance(_scn,reflected_ray,depth);
 		}

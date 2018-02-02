@@ -21,14 +21,15 @@ bool sphere_t::intersect(hit_t& result, const ray_t& _ray) const
 	float t;
 
 	t=b-d;
-	if (!is_zero(t))
+
+	if (!is_zero(t) && t > 0.0)
 	{
 		result = hit_t(this, t);
 	}
 	else 
 	{
 		t = b+d;
-		if (!is_zero(t)) 
+		if (!is_zero(t) && t > 0.0) 
 			result = hit_t(this,t);
 		else return false;
 	}

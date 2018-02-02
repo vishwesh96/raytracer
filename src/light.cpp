@@ -25,8 +25,10 @@ color_t point_light_t::direct(const Vector3f& hitpt, const Vector3f& normal, con
 	Vector3f eye = scn -> cam -> get_eye();
 	Vector3f view = (eye - hitpt).normalized();
 
-	ray_t shadow_ray = ray_t(hitpt,incident);
+	float epsilon = 1e-4;
+	ray_t shadow_ray = ray_t(hitpt + epsilon * normal, incident);
 	bool in_shadow = false;
+
 	std::vector<object_t*> objects = scn -> objs;
 	for(unsigned int  i=0;i<objects.size();i++) {
 		hit_t result;
@@ -38,7 +40,7 @@ color_t point_light_t::direct(const Vector3f& hitpt, const Vector3f& normal, con
 	color_t specular(0.0);
 
 	if(!in_shadow) {
-		diffuse = multiply_color_t_vector3f(kd,std::max(col * incident.dot(normal),0.0));
+		diffuse = multiply_color_t_vector3f(kd, col * incident.dot(normal)).clamp();
 		specular = multiply_color_t_vector3f(ks,col * pow(std::max(double(reflected.dot(view)),0.0),mat -> get_shininess()));
 	}
 	color_t total = ambient + diffuse + specular;
