@@ -1,0 +1,124 @@
+<rt-scene>
+
+<camera>
+	<lookat vector3="0.0 0.0 1.0" />
+	<eye	vector3="0.0 0.0 0.0" />
+	<up		vector3="0.0 1.0 0.0" />
+	<fov	angle="120 deg" />
+</camera>
+
+<image>
+	<width float="320" />
+	<height float="240" />
+	<bgcolor color="0.0 0.0 0.0" />	
+</image>
+
+<materials>
+	<simplemat id="diffuse">
+		<diffuse color="0.7 0.2 0.2" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="1.0 1.0 1.0" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta float="0.0"/>
+		<n float="0"/>
+		<isreflect bool="true"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="redwall">
+		<diffuse color="1.0 0.0 0.0" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="1.0 0.0 0.0" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta float="0.0"/>
+		<n float="0"/>
+		<isreflect bool="true"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="bluewall">
+		<diffuse color="0.0 0.0 1.0" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="0.0 0.0 1.0" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta float="0.0"/>
+		<n float="0"/>
+		<isreflect bool="true"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="whitewall">
+		<diffuse color="1.0 1.0 1.0" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="1.0 1.0 1.0" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta float="0.0"/>
+		<n float="0"/>
+		<isreflect bool="true"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="greywall">
+		<diffuse color="0.3 0.3 0.3" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="0.0 0.0 0.0" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta float="0.0"/>
+		<n float="0"/>
+		<isreflect bool="true"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="glass">
+		<diffuse color="0.1 0.1 0.1" />
+		<specular color="0.1 0.1 0.1" />
+		<reflect color="0.1 0.1 0.1" />
+		<transmit color="0.0 0.9 0.9" />
+		<eta float="1.5"/>
+		<n float="100" />
+		<isreflect bool="true"/>
+		<istransmit bool="true"/>
+	</simplemat>	
+</materials>
+
+<objects>
+	<sphere material="glass">
+		<center vector3="30.0 -35.0 6000.0" />
+		<radius float="20.0" />
+	</sphere>
+	<sphere material="glass">
+		<center vector3="-20.0 -35.0 5000.0" />
+		<radius float="20.0" />
+	</sphere>
+	<sphere material="redwall">
+		<center vector3="1000055.0 0.0 5000.0" />
+		<radius float="1000000.0" />
+	</sphere>
+	<sphere material="bluewall">
+		<center vector3="-1000055.0 0.0 5000.0" />
+		<radius float="1000000.0" />
+	</sphere>
+	<sphere material="whitewall">
+		<center vector3="0.0 1000055.0 5000.0" />
+		<radius float="1000000.0" />
+	</sphere>
+	<sphere material="whitewall">
+		<center vector3="0.0 -1000055.0 5000.0" />
+		<radius float="1000000.0" />
+	</sphere>
+	<sphere material="greywall">
+		<center vector3="0.0 0.0 1008000.0" />
+		<radius float="1000000.0" />
+	</sphere>
+</objects>
+
+<lights>
+	<pointlight>
+		<position vector3="0.0 40.0 5000.0" />
+		<color color="1.0 1.0 1.0" />
+		<ka float="0.2" />
+	</pointlight>
+</lights>
+
+<integrator>
+	<whitted>
+		<depth-of-recursion int="5" />
+	</whitted>
+</integrator>
+
+</rt-scene>

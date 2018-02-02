@@ -40,7 +40,8 @@ namespace rt
 {
 	/// A tolerance threshold.
 	const float EPSILON = 1e-4f;
-
+    const float BIAS = 0.7f;
+    
 	/* A few useful constants */
 	#undef M_PI
 

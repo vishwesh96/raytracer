@@ -1,3 +1,4 @@
+#include <iostream>
 #include <light.hpp>
 
 using namespace rt;
@@ -25,8 +26,7 @@ color_t point_light_t::direct(const Vector3f& hitpt, const Vector3f& normal, con
 	Vector3f eye = scn -> cam -> get_eye();
 	Vector3f view = (eye - hitpt).normalized();
 
-	float epsilon = 1e-4;
-	ray_t shadow_ray = ray_t(hitpt + epsilon * normal, incident);
+	ray_t shadow_ray = ray_t(hitpt + BIAS * normal, incident);
 	bool in_shadow = false;
 
 	std::vector<object_t*> objects = scn -> objs;
