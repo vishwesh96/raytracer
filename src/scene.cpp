@@ -32,12 +32,12 @@ material_t* scene_t::find_material(std::string name, const std::list<material_t*
 
 int scene_t::parse_int(XMLElement* _elm, std::string property)
 {
-	return parse_bool(parse_property(_elm, property, "int"));
+	return parse_int(parse_property(_elm, property, "int"));
 }
 
 int scene_t::parse_int(XMLElement* _elm)
 {
-	return parse_float(parse_parameter(_elm, "int"));
+	return parse_int(parse_parameter(_elm, "int"));
 }
 
 int scene_t::parse_int(std::string _val)
@@ -77,7 +77,7 @@ bool scene_t::parse_bool(XMLElement* _elm, std::string property)
 
 bool scene_t::parse_bool(XMLElement* _elm) 
 {
-	return parse_float(parse_parameter(_elm, "bool"));
+	return parse_bool(parse_parameter(_elm, "bool"));
 }
 
 bool scene_t::parse_bool(std::string _val) 
@@ -85,8 +85,7 @@ bool scene_t::parse_bool(std::string _val)
 	std::istringstream stream(_val);
 
 	bool val;
-	stream >> val;
-
+	stream >> std::boolalpha >> val;
 	return val;
 }
 
