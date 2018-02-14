@@ -22,14 +22,14 @@ bool sphere_t::intersect(hit_t& result, const ray_t& _ray) const
 
 	t=b-d;
 
-	if (!is_zero(t) && t > 0.0)
+	if (!is_zero(t))
 	{
 		result = hit_t(this, t);
 	}
 	else 
 	{
 		t = b+d;
-		if (!is_zero(t) && t > 0.0) 
+		if (!is_zero(t) && t >= _ray.mint) 
 			result = hit_t(this,t);
 		else return false;
 	}

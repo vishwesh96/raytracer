@@ -48,8 +48,9 @@ int main(int argc, char **argv)
 
 			std::string img_filename = scene_filename;
     		size_t lastdot = img_filename.find_last_of(".");
-    		if (lastdot != std::string::npos)
-     			img_filename.erase(lastdot, std::string::npos);
+    		
+    		if (lastdot != std::string::npos) img_filename.erase(lastdot, std::string::npos);
+
    			img_filename += ".ppm";
   	
   			scn.img->write(img_filename);

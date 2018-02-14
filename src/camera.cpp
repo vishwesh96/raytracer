@@ -38,7 +38,7 @@ using namespace rt;
 void camera_t::init(void)
 {
 	float recip = 1.0f / (far - near);
-    float cot = 1.0f / std::tan(deg2rad(fov / 2.0f));
+    float cot = 1.0f / std::tan(fov / 2.0f);
 
     Eigen::Matrix4f perspective;
     perspective <<
