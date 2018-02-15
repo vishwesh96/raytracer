@@ -27,7 +27,7 @@ using namespace rt;
 
 image_t::image_t(int _w, int _h, int _samples, color_t _bgc):width(_w),height(_h),samples_per_pixel(_samples),bgcolor(_bgc)
 {
-	aspect = float(width)/float(height);
+	aspect = double(width)/double(height);
 	data = new char[width*height*3]; 
 }
 
@@ -39,7 +39,7 @@ image_t::~image_t()
 int image_t::get_width(void) const {return width; }
 int image_t::get_height(void) const {return height; }
 int image_t::get_num_samples_per_pixel(void) const {return samples_per_pixel;}
-float image_t::get_aspect(void) const {return aspect; }
+double image_t::get_aspect(void) const {return aspect; }
 
 color_t image_t::get_bgcolor(void) const {return bgcolor; }
 
@@ -79,9 +79,9 @@ std::vector<Eigen::Vector2d> image_t::sample_pixel(unsigned int _x, unsigned int
 color_t image_t::get_pixel(unsigned int _x, unsigned int _y) const
 {
 	int pos=(_y)*width*3+(_x)*3;
-	float r=float(data[pos])/255.0f;
-	float g=float(data[pos+1])/255.0f;
-	float b=float(data[pos+2])/255.0f;
+	double r=double(data[pos])/255.0;
+	double g=double(data[pos+1])/255.0;
+	double b=double(data[pos+2])/255.0;
 	return color_t(r,g,b);
 }
 

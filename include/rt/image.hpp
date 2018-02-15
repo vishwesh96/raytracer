@@ -38,14 +38,14 @@ namespace rt
 		int width, height, samples_per_pixel;
 
 		///Aspect ratio of the image - computed from width and height above
-		float aspect;
+		double aspect;
 
 		///Background color - a ray gets this color if it does not hit anything
 		color_t bgcolor;
 
 		/** 
 		 * The pixel data of size width * height * num_channels
-		 * We compute radiance as a unbounded float. Writing to the framebuffer requires clamping to 0.0-1.0 range
+		 * We compute radiance as a unbounded double. Writing to the framebuffer requires clamping to 0.0-1.0 range
 		 * Then a gamma correction (compression) using a default value of 2.2 is applied using the rt::to_char function.
 		 * Finally the value is cast to char by multiplying with 255. 
 		 */
@@ -64,7 +64,7 @@ namespace rt
 		/// Return number of samples per pixel
 		int get_num_samples_per_pixel(void) const;
 		/// Returns aspect.
-		float get_aspect(void) const;
+		double get_aspect(void) const;
 		/// Returns background color.
 		color_t get_bgcolor(void) const;
 

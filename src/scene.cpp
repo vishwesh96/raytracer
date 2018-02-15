@@ -50,21 +50,21 @@ int scene_t::parse_int(std::string _val)
 	return val;
 }
 
-float scene_t::parse_float(XMLElement* _elm, std::string property) 
+double scene_t::parse_double(XMLElement* _elm, std::string property) 
 {
-	return parse_float(parse_property(_elm, property, "float"));
+	return parse_double(parse_property(_elm, property, "double"));
 }
 
-float scene_t::parse_float(XMLElement* _elm) 
+double scene_t::parse_double(XMLElement* _elm) 
 {
-	return parse_float(parse_parameter(_elm, "float"));
+	return parse_double(parse_parameter(_elm, "double"));
 }
 
-float scene_t::parse_float(std::string _val) 
+double scene_t::parse_double(std::string _val) 
 {
 	std::istringstream stream(_val);
 
-	float val;
+	double val;
 	stream >> val;
 
 	return val;
@@ -90,21 +90,21 @@ bool scene_t::parse_bool(std::string _val)
 }
 
 
-float scene_t::parse_angle(XMLElement* _elm, std::string _property) 
+double scene_t::parse_angle(XMLElement* _elm, std::string _property) 
 {
 	return parse_angle(parse_property(_elm, _property, "angle"));
 }
 
-float scene_t::parse_angle(XMLElement* _elm) 
+double scene_t::parse_angle(XMLElement* _elm) 
 {
 	return parse_angle(parse_parameter(_elm, "angle"));
 }
 
-float scene_t::parse_angle(std::string _val) 
+double scene_t::parse_angle(std::string _val) 
 {
 	std::istringstream stream(_val);	
 
-	float val;
+	double val;
 	std::string unit;
 	stream >> val >> unit;
 
@@ -130,7 +130,7 @@ color_t scene_t::parse_color(std::string _val)
 {
 	std::istringstream stream(_val);
 
-	float x, y, z;
+	double x, y, z;
 	stream >> x >> y >> z;
 
 	color_t res(x,y,z);
@@ -138,24 +138,24 @@ color_t scene_t::parse_color(std::string _val)
 	return res;
 }
 
-Eigen::Vector3f scene_t::parse_vector3(XMLElement* _elm, std::string _property) 
+Eigen::Vector3d scene_t::parse_vector3(XMLElement* _elm, std::string _property) 
 {
 	return parse_vector3(parse_property(_elm, _property, "vector3"));
 }
 
-Eigen::Vector3f scene_t::parse_vector3(XMLElement* _elm) 
+Eigen::Vector3d scene_t::parse_vector3(XMLElement* _elm) 
 {
 	return parse_vector3(parse_parameter(_elm, "vector3"));
 }
 
-Eigen::Vector3f scene_t::parse_vector3(std::string _val) 
+Eigen::Vector3d scene_t::parse_vector3(std::string _val) 
 {
 	std::istringstream stream(_val);
 
-	float x, y, z;
+	double x, y, z;
 	stream >> x >> y >> z;
 
-	Eigen::Vector3f res(x,y,z);
+	Eigen::Vector3d res(x,y,z);
 
 	return res;
 }
@@ -221,7 +221,9 @@ camera_t* scene_t::parse_camera(XMLElement* _elm)
 					parse_vector3(elm_camera, "lookat"),
 					parse_vector3(elm_camera, "eye"),
 					parse_vector3(elm_camera, "up"),
-					parse_angle(elm_camera, "fov")
+					parse_angle(elm_camera, "fov"),
+					parse_double(elm_camera,"near"),
+					parse_double(elm_camera,"far")
 				));
 }
 
@@ -258,7 +260,7 @@ object_t* scene_t::parse_object_sphere(XMLElement* _elm, const std::list<materia
 {
 	return (object_t*)(new sphere_t(find_material(parse_parameter(_elm, "material"),	matlist),
 									parse_vector3(_elm,  "center"),
-									parse_float(_elm, "radius")));
+									parse_double(_elm, "radius")));
 }
 
 int scene_t::parse_materials(XMLElement* _elm) 
@@ -292,8 +294,8 @@ material_t* scene_t::parse_simplemat(XMLElement* _elm)
 			parse_color(_elm, "specular"),
 			parse_color(_elm, "reflect"),
 			parse_color(_elm, "transmit"),
-			parse_float(_elm, "eta"),
-			parse_float(_elm, "n"),
+			parse_double(_elm, "eta"),
+			parse_double(_elm, "n"),
 			parse_bool(_elm, "isreflect"),
 			parse_bool(_elm, "istransmit")));
 }
@@ -307,8 +309,8 @@ image_t* scene_t::parse_image(XMLElement* _elm)
 
 	color_t bgc = parse_color(elm_img, "bgcolor");
 	return new image_t(	
-					parse_float(elm_img, "width"),
-					parse_float(elm_img, "height"),
+					parse_double(elm_img, "width"),
+					parse_double(elm_img, "height"),
 					parse_int(elm_img, "samples-per-pixel"),
 					bgc);
 
@@ -346,7 +348,7 @@ light_t* scene_t::parse_pointlight(XMLElement* _elm)
 	return (light_t*)(new point_light_t(
 			parse_vector3(_elm, "position"),
 			parse_color(_elm, "color"),
-			parse_float(_elm, "ka")));
+			parse_double(_elm, "ka")));
 }
 
 integrator_t* scene_t::parse_integrator(XMLElement* _elm)

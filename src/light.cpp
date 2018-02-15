@@ -10,13 +10,13 @@ light_t::light_t() { }
 light_t::~light_t() { }
 
 
-point_light_t::point_light_t(const Vector3f& _pos, const Vector3f& _col, const float _ka): pos(_pos), col(_col), ka(_ka) 
+point_light_t::point_light_t(const Vector3d& _pos, const Vector3d& _col, const double _ka): pos(_pos), col(_col), ka(_ka) 
 { }
 
 point_light_t::~point_light_t()
 { }
 
-color_t point_light_t::direct(const Vector3f& hitpt, const Vector3f& normal, const material_t* mat, const scene_t* scn) const
+color_t point_light_t::direct(const Vector3d& hitpt, const Vector3d& normal, const material_t* mat, const scene_t* scn) const
 {
 
 	//printf("%f\n", (hitpt- Vector3f(0.0,100003.60,35.0)).norm() );
