@@ -309,7 +309,7 @@ image_t* scene_t::parse_image(XMLElement* _elm)
 	return new image_t(	
 					parse_float(elm_img, "width"),
 					parse_float(elm_img, "height"),
-					parse_int(elm_img, "sample-per-pixel"),
+					parse_int(elm_img, "samples-per-pixel"),
 					bgc);
 
 }

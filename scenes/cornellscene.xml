@@ -11,7 +11,7 @@
 	<width float="2048" />
 	<height float="1536" />
 	<bgcolor color="0.0 0.0 0.0" />
-	<sample-per-pixel int = "3" />
+	<samples-per-pixel int = "3" />
 </image>
 
 <materials>
