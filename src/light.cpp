@@ -64,6 +64,19 @@ void point_light_t::print(std::ostream &stream) const
 	stream<<"Ambient Coefficient: "<<ka<<std::endl<<std::endl;
 }
 
+vector<Eigen::Vector3d> area_light_t::sample(int num_samples){
+	std::default_random_engine generator;
+	std::uniform_real_distribution<double> distribution(0.0,1.0);
+
+	vector<Eigen::Vector3d> samples;
+	for(int i=0;i<num_samples;i++){
+		double theta = 2 * M_PI * distribution(generator);
+		double r = sqrt(distribution(generator)) * radius;	
+		samples.push_back(Eigen::Vector3d(r*cos(theta) + center[0],r*sin(theta) + center[1]));
+	}
+	return samples;
+}
+
 color_t vector3f_to_colour_t(const Vector3f vec) {
 	return color_t(vec[0],vec[1],vec[2]);
 }

@@ -7,6 +7,7 @@ using namespace rt;
 
 void rt::render(const scene_t* scn)
 {
+	int num_samples = 4;
 	unsigned int w=scn->img->get_width();
 	unsigned int h=scn->img->get_height();
 
@@ -16,12 +17,14 @@ void rt::render(const scene_t* scn)
 		{
 			ray_t ray;
 			int d=0;
-			Eigen::Vector2f psample=scn->img->sample_pixel(i,j);
-			color_t col = scn->cam->sample_ray(ray, psample);
-
-			col *= scn->intg->radiance(scn, ray, d);
-
-			scn->img->set_pixel(i,j,col);
+			std::vector<Eigen::Vector2d> psamples=scn->img->sample_pixel(i,j,num_samples);
+			color_t color(0.0);
+			for(int i=0;i<num_samples*num_samples;i++){
+				color_t col = scn->cam->sample_ray(ray, psamples[i]);
+				color += col * scn->intg->radiance(scn, ray, d);
+			}
+			color /= num_samples*num_samples;
+			scn->img->set_pixel(i,j,color);
 		}
 
 	}

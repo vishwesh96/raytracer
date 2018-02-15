@@ -89,4 +89,35 @@ namespace rt
 		/// Prints information about the light to the stream.
 		virtual void print(std::ostream &stream) const;
 	};
+
+	class area_light_t : public light_t
+	{
+	private:
+		/// Center of the light
+		Vector3d center;
+		// Radius of the area light
+		Vector3d radius;
+		/// Color of the light. This can be thought of as radiance emitted by the light source.
+		Vector3d col;
+		/// An ambient coefficient. Modulate col with ka to get ambient component of illumination.
+		float ka;
+
+	public:
+		/// Constructor
+		area_light_t(const Vector3d& _center, const Vector3d& _radius, const Vector3d& _col, const float _ka);
+		/// Destructor
+		virtual ~area_light_t();
+
+		/** 
+		* Returns the direct illumination estimate for the point hitpt, where the surface normal is normal, material is mat.
+		* Scene is passed so that the camera position, and the objects can be used for computing the specular component
+		* of direct illumination and the shadow computations.
+		**/ 
+		virtual color_t direct(const Vector3f& hitpt, const Vector3f& normal, const material_t* mat, const scene_t* scn) const;
+
+		/// Prints information about the light to the stream.
+		virtual void print(std::ostream &stream) const;
+
+		vector<Eigen::Vector3d> sample(int num_samples);
+	};
 }

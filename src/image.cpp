@@ -42,9 +42,36 @@ float image_t::get_aspect(void) const {return aspect; }
 
 color_t image_t::get_bgcolor(void) const {return bgcolor; }
 
-Eigen::Vector2f image_t::sample_pixel(unsigned int _x, unsigned int _y) const
+std::vector<Eigen::Vector2d> image_t::sample_pixel(unsigned int _x, unsigned int _y, int num_samples) const
 {
-	return Eigen::Vector2f(float(_x)/width, float(_y)/height);
+	//grid
+	// std::vector<Eigen::Vector2d> samples;
+	// float start_x = float(_x)/width + 1.0/(2*num_samples*width);
+	// float start_y = float(_y)/height + 1.0/(2*num_samples*height);
+	// for(int i=0;i<num_samples;i++){
+	// 	for(int j=0;j<num_samples;j++){
+	// 		float center_x = start_x + float(i)/(num_samples*width);
+	// 		float center_y = start_y + float(j)/(num_samples*height);
+	// 		samples.push_back(Eigen::Vector2d(center_x, center_y));
+	// 	}
+	// }
+	// return samples;
+	//jitter
+	std::default_random_engine generator;
+	std::uniform_real_distribution<double> distribution_x(-1.0/(2*num_samples*width),1.0/(2*num_samples*width));
+	std::uniform_real_distribution<double> distribution_y(-1.0/(2*num_samples*height),1.0/(2*num_samples*height));
+
+	std::vector<Eigen::Vector2d> samples;
+	float start_x = float(_x)/width + 1.0/(2*num_samples*width);
+	float start_y = float(_y)/height + 1.0/(2*num_samples*height);
+	for(int i=0;i<num_samples;i++){
+		for(int j=0;j<num_samples;j++){
+			float center_x = start_x + float(i)/(num_samples*width);
+			float center_y = start_y + float(j)/(num_samples*height);
+			samples.push_back(Eigen::Vector2d(center_x + distribution_x(generator), center_y + distribution_y(generator)));
+		}
+	}
+	return samples;
 }
 
 color_t image_t::get_pixel(unsigned int _x, unsigned int _y) const
