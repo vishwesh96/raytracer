@@ -34,8 +34,8 @@ namespace rt
 	class image_t
 	{
 	private:
-		///Width and height of the image
-		int width, height;
+		///Width, height of the image, and number of samples per pixel
+		int width, height, samples_per_pixel;
 
 		///Aspect ratio of the image - computed from width and height above
 		float aspect;
@@ -53,7 +53,7 @@ namespace rt
 
 	public:
 		/// Constructor.
-		image_t(int width, int height, color_t _bgc);
+		image_t(int width, int height, int samples_per_pixel, color_t _bgc);
 		/// Destructor.
 		virtual ~image_t();
 
@@ -61,6 +61,8 @@ namespace rt
 		int get_width(void) const;
 		/// Returns height.
 		int get_height(void) const;
+		/// Return number of samples per pixel
+		int get_num_samples_per_pixel(void) const;
 		/// Returns aspect.
 		float get_aspect(void) const;
 		/// Returns background color.

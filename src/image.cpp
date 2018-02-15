@@ -25,7 +25,7 @@
 
 using namespace rt;
 
-image_t::image_t(int _w, int _h, color_t _bgc):width(_w),height(_h),bgcolor(_bgc)
+image_t::image_t(int _w, int _h, int _samples, color_t _bgc):width(_w),height(_h),samples_per_pixel(_samples),bgcolor(_bgc)
 {
 	aspect = float(width)/float(height);
 	data = new char[width*height*3]; 
@@ -38,6 +38,7 @@ image_t::~image_t()
 
 int image_t::get_width(void) const {return width; }
 int image_t::get_height(void) const {return height; }
+int image_t::get_num_samples_per_pixel(void) const {return samples_per_pixel;}
 float image_t::get_aspect(void) const {return aspect; }
 
 color_t image_t::get_bgcolor(void) const {return bgcolor; }
