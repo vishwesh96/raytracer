@@ -70,7 +70,7 @@ namespace rt
 
 		/// Returns a pixel location with coordinates between 0.0-1.0 from int pixel coords.
 		/// This only returns one sample per pixel.
-		std::vector<Eigen::Vector2d> sample_pixel(unsigned int _x, unsigned int _y, int num_samples) const;
+		std::vector<Eigen::Vector2d> sample_pixel(unsigned int _x, unsigned int _y) const;
 
 		/// Returns the color value for the pixel at the given location from framebuffer data.
 		color_t get_pixel(unsigned int _x, unsigned int _y) const;

@@ -86,7 +86,7 @@ const Vector3d camera_t::get_eye(void) {return eye;}
 const Vector3d camera_t::get_up(void) {return up;}
 const double camera_t::get_fov(void) {return fov;}
 
-color_t camera_t::sample_ray(ray_t &ray, const Vector2f& _pixelpos) const
+color_t camera_t::sample_ray(ray_t &ray, const Vector2d& _pixelpos) const
 {
 	Vector3d pt(_pixelpos.x(), _pixelpos.y(), 0.0);
  	Vector3d near_p= image2cam.transform_point(pt);

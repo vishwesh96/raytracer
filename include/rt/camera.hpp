@@ -93,7 +93,7 @@ namespace rt
 		void set_aspect(double _a) { aspect=_a; init(); }
 
 		/// Generate a ray from the camera center in the direction of _pixelpos
-		color_t sample_ray(ray_t &ray, const Vector2f& _pixelpos) const;
+		color_t sample_ray(ray_t &ray, const Vector2d& _pixelpos) const;
 
 		/// Print the camera to a stream
 		void print(std::ostream &stream);

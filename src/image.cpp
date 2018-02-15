@@ -66,7 +66,7 @@ std::vector<Eigen::Vector2d> image_t::sample_pixel(unsigned int _x, unsigned int
 	std::vector<Eigen::Vector2d> samples;
 	float start_x = float(_x)/width + 1.0/(2*samples_per_pixel*width);
 	float start_y = float(_y)/height + 1.0/(2*samples_per_pixel*height);
-	for(int i=0;i<samples_per_pixel;i++){`
+	for(int i=0;i<samples_per_pixel;i++){
 		for(int j=0;j<samples_per_pixel;j++){
 			float center_x = start_x + float(i)/(samples_per_pixel*width);
 			float center_y = start_y + float(j)/(samples_per_pixel*height);

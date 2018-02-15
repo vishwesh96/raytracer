@@ -39,10 +39,10 @@ color_t whitted_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int d) 
 			d_col += (*lit)->direct(hitpt, normal, mat , _scn);
 		}
 
-		Vector3f incident = _ray.direction.normalized();
+		Vector3d incident = _ray.direction.normalized();
 		float incident_dot_normal = incident.dot(normal);
 		
-		Vector3f transmitted;
+		Vector3d transmitted;
 		ray_t transmitted_ray;
 		float nr=1.0;
 
@@ -58,7 +58,7 @@ color_t whitted_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int d) 
 			}
 		}
 
-		Vector3f reflected =  (incident - 2 * incident_dot_normal * normal).normalized();
+		Vector3d reflected =  (incident - 2 * incident_dot_normal * normal).normalized();
 		ray_t reflected_ray(hitpt + BIAS * normal,reflected);
 
 

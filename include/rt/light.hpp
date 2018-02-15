@@ -96,7 +96,9 @@ namespace rt
 		/// Center of the light
 		Vector3d center;
 		// Radius of the area light
-		Vector3d radius;
+		double radius;
+		//z axis 
+		Vector3d normal;
 		/// Color of the light. This can be thought of as radiance emitted by the light source.
 		Vector3d col;
 		/// An ambient coefficient. Modulate col with ka to get ambient component of illumination.
@@ -104,7 +106,7 @@ namespace rt
 
 	public:
 		/// Constructor
-		area_light_t(const Vector3d& _center, const Vector3d& _radius, const Vector3d& _col, const float _ka);
+		area_light_t(const Vector3d& _center, const Vector3d& _radius, const Vector3d& _normal, const Vector3d& _col, const float _ka);
 		/// Destructor
 		virtual ~area_light_t();
 
@@ -113,11 +115,11 @@ namespace rt
 		* Scene is passed so that the camera position, and the objects can be used for computing the specular component
 		* of direct illumination and the shadow computations.
 		**/ 
-		virtual color_t direct(const Vector3f& hitpt, const Vector3f& normal, const material_t* mat, const scene_t* scn) const;
+		virtual color_t direct(const Vector3d& hitpt, const Vector3d& normal, const material_t* mat, const scene_t* scn) const;
 
 		/// Prints information about the light to the stream.
 		virtual void print(std::ostream &stream) const;
 
-		vector<Eigen::Vector3d> sample(int num_samples);
+		std::vector<Eigen::Vector3d> sample(int num_samples);
 	};
 }
