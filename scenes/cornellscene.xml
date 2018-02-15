@@ -10,7 +10,8 @@
 <image>
 	<width float="512" />
 	<height float="384" />
-	<bgcolor color="0.0 0.0 0.0" />	
+	<bgcolor color="0.0 0.0 0.0" />
+	<samples-per-pixel int = "4" />
 </image>
 
 <materials>

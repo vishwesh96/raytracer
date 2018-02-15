@@ -25,7 +25,7 @@
 
 using namespace rt;
 
-image_t::image_t(int _w, int _h, color_t _bgc):width(_w),height(_h),bgcolor(_bgc)
+image_t::image_t(int _w, int _h, int _samples, color_t _bgc):width(_w),height(_h),samples_per_pixel(_samples),bgcolor(_bgc)
 {
 	aspect = float(width)/float(height);
 	data = new char[width*height*3]; 
@@ -38,36 +38,38 @@ image_t::~image_t()
 
 int image_t::get_width(void) const {return width; }
 int image_t::get_height(void) const {return height; }
+int image_t::get_num_samples_per_pixel(void) const {return samples_per_pixel;}
 float image_t::get_aspect(void) const {return aspect; }
 
 color_t image_t::get_bgcolor(void) const {return bgcolor; }
 
-std::vector<Eigen::Vector2d> image_t::sample_pixel(unsigned int _x, unsigned int _y, int num_samples) const
+std::vector<Eigen::Vector2d> image_t::sample_pixel(unsigned int _x, unsigned int _y) const
 {
 	//grid
 	// std::vector<Eigen::Vector2d> samples;
-	// float start_x = float(_x)/width + 1.0/(2*num_samples*width);
-	// float start_y = float(_y)/height + 1.0/(2*num_samples*height);
-	// for(int i=0;i<num_samples;i++){
-	// 	for(int j=0;j<num_samples;j++){
-	// 		float center_x = start_x + float(i)/(num_samples*width);
-	// 		float center_y = start_y + float(j)/(num_samples*height);
+	// float start_x = float(_x)/width + 1.0/(2*samples_per_pixel*width);
+	// float start_y = float(_y)/height + 1.0/(2*samples_per_pixel*height);
+	// for(int i=0;i<samples_per_pixel;i++){
+	// 	for(int j=0;j<samples_per_pixel;j++){
+	// 		float center_x = start_x + float(i)/(samples_per_pixel*width);
+	// 		float center_y = start_y + float(j)/(samples_per_pixel*height);
 	// 		samples.push_back(Eigen::Vector2d(center_x, center_y));
 	// 	}
 	// }
 	// return samples;
+
 	//jitter
 	std::default_random_engine generator;
-	std::uniform_real_distribution<double> distribution_x(-1.0/(2*num_samples*width),1.0/(2*num_samples*width));
-	std::uniform_real_distribution<double> distribution_y(-1.0/(2*num_samples*height),1.0/(2*num_samples*height));
+	std::uniform_real_distribution<double> distribution_x(-1.0/(2*samples_per_pixel*width),1.0/(2*samples_per_pixel*width));
+	std::uniform_real_distribution<double> distribution_y(-1.0/(2*samples_per_pixel*height),1.0/(2*samples_per_pixel*height));
 
 	std::vector<Eigen::Vector2d> samples;
-	float start_x = float(_x)/width + 1.0/(2*num_samples*width);
-	float start_y = float(_y)/height + 1.0/(2*num_samples*height);
-	for(int i=0;i<num_samples;i++){
-		for(int j=0;j<num_samples;j++){
-			float center_x = start_x + float(i)/(num_samples*width);
-			float center_y = start_y + float(j)/(num_samples*height);
+	float start_x = float(_x)/width + 1.0/(2*samples_per_pixel*width);
+	float start_y = float(_y)/height + 1.0/(2*samples_per_pixel*height);
+	for(int i=0;i<samples_per_pixel;i++){`
+		for(int j=0;j<samples_per_pixel;j++){
+			float center_x = start_x + float(i)/(samples_per_pixel*width);
+			float center_y = start_y + float(j)/(samples_per_pixel*height);
 			samples.push_back(Eigen::Vector2d(center_x + distribution_x(generator), center_y + distribution_y(generator)));
 		}
 	}
