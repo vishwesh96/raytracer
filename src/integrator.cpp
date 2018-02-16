@@ -28,7 +28,6 @@ color_t whitted_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int d) 
 		  
 		  hitpt = _ray.origin+_ray.maxt*_ray.direction;
 		  normal = (*oit)->get_normal(hitpt);
-
 		  object_intersection=true;
 		}
 		

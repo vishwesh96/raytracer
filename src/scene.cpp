@@ -243,6 +243,8 @@ int scene_t::parse_objects(XMLElement* _elm, const std::list<material_t*>& matli
 
 		if (name == "sphere")
 			objs.push_back(parse_object_sphere(elm_child, matlist));
+		else if (name == "torus")
+			objs.push_back(parse_object_torus(elm_child, matlist));
 		else
 			throw std::invalid_argument("Invalid object in scene file.");
 
@@ -261,6 +263,15 @@ object_t* scene_t::parse_object_sphere(XMLElement* _elm, const std::list<materia
 	return (object_t*)(new sphere_t(find_material(parse_parameter(_elm, "material"),	matlist),
 									parse_vector3(_elm,  "center"),
 									parse_double(_elm, "radius")));
+}
+
+object_t* scene_t::parse_object_torus(XMLElement* _elm, const std::list<material_t*>& matlist) 
+{
+	return (object_t*)(new torus_t(find_material(parse_parameter(_elm, "material"),	matlist),
+									parse_vector3(_elm,  "center"),
+									parse_double(_elm, "R"),
+									parse_double(_elm,"r"),
+									parse_vector3(_elm,"axis")));
 }
 
 int scene_t::parse_materials(XMLElement* _elm) 
