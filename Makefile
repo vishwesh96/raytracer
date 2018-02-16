@@ -31,10 +31,10 @@ FILESYSTEM_INCLUDE=$(EXTDIR)/filesystem
 EXTMODULES=$(EXTDIR)/tinyxml2
 
 # Compiler and Linker flags
-LDFLAGS=-L/usr/local/lib 
+LDFLAGS=-L/usr/local/lib -fopenmp
 
-CPPFLAGS=-I$(EIGEN_INCLUDE) -I$(TINYXML2_INCLUDE) -I$(FILESYSTEM_INCLUDE) -I$(INCDIR) 
-CPPFLAGS+=-O3 -Wall -std=c++11
+CPPFLAGS=-I$(EIGEN_INCLUDE) -I$(TINYXML2_INCLUDE) -I$(FILESYSTEM_INCLUDE) -I$(INCDIR) -fopenmp 
+CPPFLAGS+=-O3 -Wall -std=c++11 
 
 ######################################
 

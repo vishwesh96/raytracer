@@ -32,6 +32,8 @@ namespace rt
 {
 	/// Forward Declaration.
 	class scene_t;
+	class light_t;
+	typedef std::pair<const light_t*, double> light_hit_t; 
 
 	/**
 	 * \brief  This is the abstract base class for lights.
@@ -58,6 +60,8 @@ namespace rt
 
 		/// Prints information about the light to the stream.
 		virtual void print(std::ostream &stream) const = 0;
+		virtual bool intersect(light_hit_t& light_hit, ray_t _ray) const = 0;
+		virtual Vector3d get_color() const = 0;
 	};
 
 	/** 
@@ -88,6 +92,9 @@ namespace rt
 
 		/// Prints information about the light to the stream.
 		virtual void print(std::ostream &stream) const;
+		virtual bool intersect(light_hit_t& light_hit, ray_t _ray) const;
+		virtual Vector3d get_color() const;
+
 	};
 
 	class area_light_t : public light_t
@@ -104,11 +111,11 @@ namespace rt
 		/// Color of the light. This can be thought of as radiance emitted by the light source.
 		Vector3d col;
 		/// An ambient coefficient. Modulate col with ka to get ambient component of illumination.
-		float ka;
+		double ka;
 
 	public:
 		/// Constructor
-		area_light_t(const Vector3d& _center, const Vector3d& _radius, const Vector3d& _normal, const int& num_samples, const Vector3d& _col, const float _ka);
+		area_light_t(const Vector3d& _center, const double& _radius, const Vector3d& _normal, const int& num_samples, const Vector3d& _col, const double _ka);
 		/// Destructor
 		virtual ~area_light_t();
 
@@ -122,6 +129,10 @@ namespace rt
 		/// Prints information about the light to the stream.
 		virtual void print(std::ostream &stream) const;
 
-		std::vector<Eigen::Vector3d> sample(int num_samples);
+		std::vector<Eigen::Vector3d> sample(int num_samples) const;
+		virtual bool intersect(light_hit_t& light_hit, ray_t _ray) const;
+
+		virtual Vector3d get_color() const;
+
 	};
 }

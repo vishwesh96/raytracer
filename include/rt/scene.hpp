@@ -127,6 +127,8 @@ namespace rt
     int parse_lights(XMLElement* _elm);
     /// Parse a point light.
     light_t* parse_pointlight(XMLElement* _elm);
+    /// Parse a area light.
+    light_t* parse_arealight(XMLElement* _elm); 
 
     /// Parse the image.
     image_t* parse_image(XMLElement* _elm);
@@ -135,6 +137,8 @@ namespace rt
     integrator_t* parse_integrator(XMLElement* _elm);
     /// Parse a whitted integrator.
     integrator_t* parse_whitted_integrator(XMLElement *_elm);
+    /// Parse a monte-carlo integrator.
+    integrator_t* parse_monte_carlo_integrator(XMLElement *_elm);
 
     ///Constructor. Does not do anything. This cannot be used, hence defined as private.
     scene_t() {;}

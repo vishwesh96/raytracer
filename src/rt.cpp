@@ -11,16 +11,19 @@ void rt::render(const scene_t* scn)
 	unsigned int w=scn->img->get_width();
 	unsigned int h=scn->img->get_height();
 
+	#pragma omp parallel for schedule(dynamic,1)
 	for (unsigned int i=0; i<w; i++)
 	{
+		fprintf(stderr,"\rRendering (%d spp) %5.2f%%",num_samples*num_samples,100.0*i/(w-1));
+		#pragma omp parallel for schedule(dynamic,1)
 		for (unsigned int j=0; j<h; j++)
 		{
 			ray_t ray;
 			int d=0;
 			std::vector<Eigen::Vector2d> psamples=scn->img->sample_pixel(i,j);
 			color_t color(0.0);
-			for(int i=0;i<num_samples*num_samples;i++){
-				color_t col = scn->cam->sample_ray(ray, psamples[i]);
+			for(int k=0;k<num_samples*num_samples;k++){
+				color_t col = scn->cam->sample_ray(ray, psamples[k]);
 				color += col * scn->intg->radiance(scn, ray, d);
 			}
 			color /= num_samples*num_samples;

@@ -1,3 +1,7 @@
 1) Bias : 0.0005f
 2) remove t> _mint check in sphere intersection
 3) deg_fov removed from camera.cpp
+4)http://www.rorydriscoll.com/2009/01/07/better-sampling/
+5) https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d
+http://mathinfo.univ-reims.fr/IMG/pdf/Using_the_modified_Phong_reflectance_model_for_Physically_based_rendering_-_Lafortune.pdf
+https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d

@@ -52,6 +52,12 @@ color_t point_light_t::direct(const Vector3d& hitpt, const Vector3d& normal, con
 	return total;
 }
 		
+bool point_light_t::intersect(light_hit_t& light_hit, ray_t _ray) const
+{
+	return false;
+}
+
+Vector3d point_light_t::get_color() const {return this->col;}
 
 void point_light_t::print(std::ostream &stream) const
 {
@@ -64,7 +70,8 @@ void point_light_t::print(std::ostream &stream) const
 	stream<<"Ambient Coefficient: "<<ka<<std::endl<<std::endl;
 }
 
-area_light_t::area_light_t(const Vector3d& _center, const double& _radius, const Vector3d& _normal, const int& _num_samples, const double _ka)
+
+area_light_t::area_light_t(const Vector3d& _center, const double& _radius, const Vector3d& _normal, const int& _num_samples, const Vector3d& _col, const double _ka)
 {
 	center = _center;
 	radius = _radius;
@@ -73,6 +80,9 @@ area_light_t::area_light_t(const Vector3d& _center, const double& _radius, const
 	col = _col;
 	ka = _ka;
 }
+
+area_light_t::~area_light_t()
+{ }
 
 color_t area_light_t::direct(const Vector3d& _hitpt, const Vector3d& _normal, const material_t* _mat, const scene_t* _scn) const
 {
@@ -91,7 +101,7 @@ color_t area_light_t::direct(const Vector3d& _hitpt, const Vector3d& _normal, co
 	return color;
 }
 
-std::vector<Eigen::Vector3d> area_light_t::sample(int _num_samples){
+std::vector<Eigen::Vector3d> area_light_t::sample(int _num_samples) const{
 	std::default_random_engine generator;
 	std::uniform_real_distribution<double> distribution(0.0,1.0);
 
@@ -118,6 +128,21 @@ void area_light_t::print(std::ostream &stream) const
 	stream<<"Color: "<<col.format(CommaInitFmt)<<std::endl;
 	stream<<"Ambient Coefficient: "<<ka<<std::endl<<std::endl;
 }
+
+bool area_light_t::intersect(light_hit_t& result, ray_t _ray) const
+{
+	double t = ((this->center - _ray.origin).dot(this->normal))/((_ray.direction).dot(this->normal));
+	double center_dis = (_ray.origin + _ray.direction*t - center).norm();
+	if (center_dis < this->radius && t >= _ray.mint && t<= _ray.maxt)
+	{
+		result = light_hit_t(this, t);
+		return true;
+	}
+
+	return false;
+}
+
+Vector3d area_light_t::get_color() const {return this->col;}
 
 color_t Vector3d_to_colour_t(const Vector3d vec) {
 	return color_t(vec[0],vec[1],vec[2]);

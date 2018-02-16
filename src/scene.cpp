@@ -360,7 +360,7 @@ light_t* scene_t::parse_arealight(XMLElement* _elm)
 			parse_double(_elm, "radius"),
 			parse_vector3(_elm, "normal"),
 			parse_int(_elm, "num-samples"),
-			parse_color(_elm, "color"),
+			parse_vector3(_elm, "color"),
 			parse_double(_elm, "ka")));
 }
 
@@ -377,8 +377,14 @@ integrator_t* scene_t::parse_integrator(XMLElement* _elm)
 	{
 		return parse_whitted_integrator(elm_child);
 	}
+	else if(name == "monte-carlo")
+	{
+		return parse_monte_carlo_integrator(elm_child);
+	}
 	else
+	{
 		throw std::invalid_argument("Invalid integrator in scene file.");
+	}
 	
 		
 }
@@ -388,3 +394,10 @@ integrator_t* scene_t::parse_whitted_integrator(XMLElement *_elm)
 	return (integrator_t*)(new whitted_integrator_t(
 								parse_int(_elm, "depth-of-recursion")));
 }
+
+integrator_t* scene_t::parse_monte_carlo_integrator(XMLElement *_elm)
+{
+	return (integrator_t*)(new monte_carlo_integrator_t(
+								parse_int(_elm, "depth-of-recursion")));
+}
+
