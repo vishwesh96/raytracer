@@ -99,6 +99,8 @@ namespace rt
 		double radius;
 		//z axis 
 		Vector3d normal;
+		// Number of Samples on area light
+		int num_samples;
 		/// Color of the light. This can be thought of as radiance emitted by the light source.
 		Vector3d col;
 		/// An ambient coefficient. Modulate col with ka to get ambient component of illumination.
@@ -106,7 +108,7 @@ namespace rt
 
 	public:
 		/// Constructor
-		area_light_t(const Vector3d& _center, const Vector3d& _radius, const Vector3d& _normal, const Vector3d& _col, const float _ka);
+		area_light_t(const Vector3d& _center, const Vector3d& _radius, const Vector3d& _normal, const int& num_samples, const Vector3d& _col, const float _ka);
 		/// Destructor
 		virtual ~area_light_t();
 

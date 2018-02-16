@@ -135,17 +135,20 @@
 </objects>
 
 <lights>
-	<pointlight>
-		<position vector3="0.0 3.2 15.5" />
+	<arealight>
+		<center vector3="0.0 3.2 15.5" />
+		<radius double="0.5" />
+		<normal vector3="0.0 1.0 0.0" />
+		<num-samples int="50" />
 		<color color="1.0 1.0 1.0" />
 		<ka double="0.3" />
-	</pointlight>
+	</arealight>
 </lights>
 
 <integrator>
-	<whitted>
-		<depth-of-recursion int="10" />
-	</whitted>
+	<monte-carlo>
+		<depth-of-recursion int="3" />
+	</monte-carlo>
 </integrator>
 
 

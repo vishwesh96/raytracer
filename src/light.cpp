@@ -64,12 +64,39 @@ void point_light_t::print(std::ostream &stream) const
 	stream<<"Ambient Coefficient: "<<ka<<std::endl<<std::endl;
 }
 
-std::vector<Eigen::Vector3d> area_light_t::sample(int num_samples){
+area_light_t::area_light_t(const Vector3d& _center, const double& _radius, const Vector3d& _normal, const int& _num_samples, const double _ka)
+{
+	center = _center;
+	radius = _radius;
+	normal = _normal.normalized();
+	num_samples = _num_samples;
+	col = _col;
+	ka = _ka;
+}
+
+color_t area_light_t::direct(const Vector3d& _hitpt, const Vector3d& _normal, const material_t* _mat, const scene_t* _scn) const
+{
+	std::vector<Eigen::Vector3d> sample_points = sample(num_samples);
+
+	color_t color(0.0);
+
+	for(int i =0 ; i < num_samples ; i++)
+	{
+		point_light_t * point_light = new point_light_t(sample_points[i], col, ka);
+		color += point_light->direct(_hitpt, _normal, _mat, _scn);
+		delete point_light;
+	}
+
+	color /= num_samples;
+	return color;
+}
+
+std::vector<Eigen::Vector3d> area_light_t::sample(int _num_samples){
 	std::default_random_engine generator;
 	std::uniform_real_distribution<double> distribution(0.0,1.0);
 
 	std::vector<Eigen::Vector3d> samples;
-	for(int i=0;i<num_samples;i++){
+	for(int i=0;i<_num_samples;i++){
 		double theta = 2 * M_PI * distribution(generator);
 		double r = sqrt(distribution(generator)) * radius;
 		Vector3d e_x = center.cross(normal).normalized();
@@ -77,6 +104,19 @@ std::vector<Eigen::Vector3d> area_light_t::sample(int num_samples){
 		samples.push_back(center + r*cos(theta)*e_x + r*sin(theta)*e_y);
 	}
 	return samples;
+}
+
+void area_light_t::print(std::ostream &stream) const
+{
+	Eigen::IOFormat CommaInitFmt(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", ", ", "", "", "[ ", " ]");
+	
+	stream<<"Light Properties: -------------------------------"<<std::endl;
+	stream<<"Type: Area Light"<<std::endl;
+	stream<<"Center: "<<center.format(CommaInitFmt)<<std::endl;
+	stream<<"Radius: "<<radius<<std::endl;
+	stream<<"Normal: "<<normal.format(CommaInitFmt)<<std::endl;
+	stream<<"Color: "<<col.format(CommaInitFmt)<<std::endl;
+	stream<<"Ambient Coefficient: "<<ka<<std::endl<<std::endl;
 }
 
 color_t Vector3d_to_colour_t(const Vector3d vec) {
