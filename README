@@ -1,0 +1,28 @@
+Poly34.h, Poly34.cpp are included in project which are not written by us. They were required to solve biquadtratic equations for the torus primitive.
+
+Members:
+	C Vishwesh 140050031
+	Suman Swaroop 140050032
+
+I pledge on my honour that I have not given or received any unauthorized assistance on this assignment or any previous task.
+	-C Vishwesh
+
+I pledge on my honour that I have not given or received any unauthorized assistance on this assignment or any previous task.
+	-Suman Swaroop
+
+
+NOTE : We have attempted Bonus 2, and have submitted the 2 scene files as scene1.xml and scene2.xml
+
+References:
+	1) http://www.rorydriscoll.com/2009/01/07/better-sampling/  --  Direction sampling in a hemisphere (cosine and uniform)
+	
+	2) https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d -- rotation matrix for local frame to world frame
+	
+	3) http://mathinfo.univ-reims.fr/IMG/pdf/Using_the_modified_Phong_reflectance_model_for_Physically_based_rendering_-_Lafortune.pdf -- sampling BRDFs and monte carlo integration
+
+	For Torus primitive:
+	1) http://math.ivanovo.ac.ru/dalgebra/Khashin/poly/ -- Biquadtratic solver to calculate intersection points
+	
+	For Triangle Primitive:
+	1) https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm#C++_Implementation -- For ray triangle intersection
+

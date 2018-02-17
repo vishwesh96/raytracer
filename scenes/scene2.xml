@@ -1,0 +1,192 @@
+<rt-scene>
+
+<camera>
+	<lookat vector3="0.0 0.0 1.0" />
+	<eye	vector3="0.0 0.0 0.0" />
+	<up		vector3="0.0 1.0 0.0" />
+	<fov	angle="60 deg"/>
+	<near double="1e-4" />
+	<far  double="1e4" />
+</camera>
+
+<image>
+	<width double="1024" />
+	<height double="768" />
+	<bgcolor color="0.0 0.0 0.0" />
+	<samples-per-pixel int="16" />
+</image>
+
+<materials>
+	<simplemat id="left">
+		<diffuse color="0.75 0.25 0.25" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="0.6 0.6 0.6" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta double="0.0"/>
+		<n double="0"/>
+		<isreflect bool="false"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="right">
+		<diffuse color="0.25 0.25 0.75" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="0.6 0.6 0.6" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta double="0.0"/>
+		<n double="0"/>
+		<isreflect bool="false"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="back">
+		<diffuse color="0.75 0.75 0.75" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="0.65 0.65 0.65" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta double="0.0"/>
+		<n double="0"/>
+		<isreflect bool="false"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="front">
+		<diffuse color="0.0 0.0 0.0" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="0.65 0.65 0.65" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta double="0.0"/>
+		<n double="0"/>
+		<isreflect bool="false"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="bottom">
+		<diffuse color="0.75 0.75 0.75" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="0.65 0.65 0.65" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta double="0.0"/>
+		<n double="0"/>
+		<isreflect bool="false"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="top">
+		<diffuse color="0.75 0.75 0.75" />
+		<specular color="0.0 0.0 0.0" />	
+		<reflect color="0.65 0.65 0.65" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta double="0.0"/>
+		<n double="0"/>
+		<isreflect bool="false"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="specular">
+		<diffuse color="1.25 1.25 0.25" />
+		<specular color="1.25 1.25 0.25" />	
+		<reflect color="0.7 0.7 0.7" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta double="0.0"/>
+		<n double="60"/>
+		<isreflect bool="false"/>
+		<istransmit bool="false"/>
+	</simplemat>
+	<simplemat id="mirror">
+		<diffuse color="0.1 0.1 0.1" />
+		<specular color="0.0 0.0 0.0" />
+		<reflect color="1.0 1.0 1.0" />
+		<transmit color="0.0 0.0 0.0" />
+		<eta double="0.0"/>
+		<n double="0" />
+		<isreflect bool="true"/>
+		<istransmit bool="false"/>
+	</simplemat>	
+	<simplemat id="glass">
+		<diffuse color="0.0 0.0 0.0" />
+		<specular color="0.0 0.0 0.0" />
+		<reflect color="0.0 0.0 0.0" />
+		<transmit color="1.0 1.0 1.0" />
+		<eta double="1.5"/>
+		<n double="0" />
+		<isreflect bool="false"/>
+		<istransmit bool="true"/>
+	</simplemat>	
+</materials>
+
+<objects>
+	<triangle material="left">
+		<vertex0 vector3="4.0 1000.0 1000.0"/>
+		<vertex1 vector3="4.0 -1000.0 1000.0"/>
+		<vertex2 vector3="4.0 1000.0 -1000.0"/>
+	</triangle>
+
+	<triangle material="right">
+		<vertex0 vector3="-4.0 1000.0 1000.0"/>
+		<vertex1 vector3="-4.0 -1000.0 1000.0"/>
+		<vertex2 vector3="-4.0 1000.0 -1000.0"/>
+	</triangle>
+
+
+	<triangle material="top">
+		<vertex0 vector3="1000.0 4.0 1000.0"/>
+		<vertex1 vector3="-1000.0 4.0 1000.0"/>
+		<vertex2 vector3="1000.0 4.0 -1000.0"/>
+	</triangle>
+
+	<triangle material="bottom">
+		<vertex0 vector3="1000.0 -4.0 1000.0"/>
+		<vertex1 vector3="-1000.0 -4.0 1000.0"/>
+		<vertex2 vector3="1000.0 -4.0 -1000.0"/>
+	</triangle>
+	<triangle material="back">
+		<vertex0 vector3="1000.0 1000.0 18.0"/>
+		<vertex1 vector3="0.0 -1000.0 18.0"/>
+		<vertex2 vector3="-1000.0 1000.0 18.1"/>
+	</triangle>
+
+	<triangle material="specular">
+		<vertex0 vector3="0.0 -4.0 11.0"/>
+		<vertex1 vector3="-2.0 -4.0 16.0"/>
+		<vertex2 vector3="2.0 -4.0 16.0"/>
+	</triangle>
+
+	<triangle material="specular">
+		<vertex0 vector3="0.0 -1.0 13.0"/>
+		<vertex1 vector3="-2.0 -4.0 16.0"/>
+		<vertex2 vector3="0.0 -4.0 11.0"/>
+	</triangle>
+	<triangle material="specular">
+		<vertex0 vector3="0.0 -1.0 13.0"/>
+		<vertex1 vector3="0.0 -4.0 11.0"/>
+		<vertex2 vector3="2.0 -4.0 16.0"/>
+	</triangle>
+	<triangle material="specular">
+		<vertex0 vector3="0.0 -1.0 13.0"/>
+		<vertex2 vector3="2.0 -4.0 16.0"/>
+		<vertex1 vector3="-2.0 -4.0 16.0"/>
+	</triangle>
+
+	<torus material="glass">
+		<center vector3="0.0 -2.0 13.0" />
+		<R double="2.0" />
+		<r double="0.4" />
+		<axis vector3="0.0 1.0 -0.5" />
+	</torus>	
+
+</objects>
+
+<lights>
+	<arealight>
+		<center vector3="0.0 3.99 12.0" />
+		<radius double="1.5" />
+		<normal vector3="0.0 1.0 0.0" />
+		<num-samples int="1" />
+		<color vector3="1.5 1.5 1.5" />
+		<ka double="0.3" />
+	</arealight>
+</lights>
+
+<integrator>
+	<monte-carlo>
+		<depth-of-recursion int="8" />
+	</monte-carlo>
+</integrator>
+
+
+</rt-scene>
