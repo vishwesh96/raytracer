@@ -245,6 +245,8 @@ int scene_t::parse_objects(XMLElement* _elm, const std::list<material_t*>& matli
 			objs.push_back(parse_object_sphere(elm_child, matlist));
 		else if (name == "torus")
 			objs.push_back(parse_object_torus(elm_child, matlist));
+		else if (name == "triangle")
+			objs.push_back(parse_object_triangle(elm_child, matlist));
 		else
 			throw std::invalid_argument("Invalid object in scene file.");
 
@@ -273,6 +275,16 @@ object_t* scene_t::parse_object_torus(XMLElement* _elm, const std::list<material
 									parse_double(_elm,"r"),
 									parse_vector3(_elm,"axis")));
 }
+
+object_t* scene_t::parse_object_triangle(XMLElement* _elm, const std::list<material_t*>& matlist) 
+{
+	Eigen::Vector3d verts[3];
+	verts[0] = parse_vector3(_elm,  "vertex0");
+	verts[1] = parse_vector3(_elm,  "vertex1");
+	verts[2] = parse_vector3(_elm,  "vertex2");
+	return (object_t*)(new triangle_t(find_material(parse_parameter(_elm, "material"),	matlist),verts));
+}
+
 
 int scene_t::parse_materials(XMLElement* _elm) 
 {

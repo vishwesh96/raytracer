@@ -184,7 +184,7 @@ color_t monte_carlo_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int
 		if(mat->get_is_transmit()) 
 		{
 			transmitted_ray = ray_t(hitpt - BIAS * normal ,transmitted);
-			ray_t reflected_ray(hitpt + BIAS*normal, reflected);
+			/*ray_t reflected_ray(hitpt + BIAS*normal, reflected);
 
 			double cos_t = -transmitted.dot(normal);
 			double cos_i = -incident_dot_normal;
@@ -195,9 +195,9 @@ color_t monte_carlo_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int
 			double fr_parallel = (cos_i - nr * (cos_t) )/ (cos_i + nr * (cos_t) );
 			fr_parallel *= fr_parallel;
 
-			double re = (fr_parallel + fr_parallel )/2.0;
+			double re = (fr_parallel + fr_parallel )/2.0;*/
 
-			return re*radiance(_scn, reflected_ray, depth) + (1-re)*radiance(_scn,transmitted_ray,depth);
+			return /*re*radiance(_scn, reflected_ray, depth) + (1-re)**/radiance(_scn,transmitted_ray,depth);
 
 		}
 		

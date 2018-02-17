@@ -32,6 +32,7 @@
 #include <material.hpp>
 #include <object.hpp>
 #include <sphere.hpp>
+#include <triangle.hpp>
 #include <torus.hpp>
 #include <utils.hpp>
 
@@ -121,6 +122,9 @@ namespace rt
 
     /// Parse a torus object.
     object_t* parse_object_torus(XMLElement* _elm, const std::list<material_t*>& matlist);
+
+    /// Parse a triangle object.
+    object_t* parse_object_triangle(XMLElement* _elm, const std::list<material_t*>& matlist);
 
     /// Parses materials. All materials in the scene must appear in one block. They are all added to a list of materials.
     int parse_materials(XMLElement* _elm);

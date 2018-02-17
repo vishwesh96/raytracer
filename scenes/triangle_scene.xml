@@ -13,7 +13,7 @@
 	<width double="1024" />
 	<height double="768" />
 	<bgcolor color="0.0 0.0 0.0" />
-	<samples-per-pixel int="140" />
+	<samples-per-pixel int="8" />
 </image>
 
 <materials>
@@ -100,43 +100,16 @@
 </materials>
 
 <objects>
-	<sphere material="left">
-		<center vector3="100004.0 -250.0 0.0" />
-		<radius double="100000.0" />
-	</sphere>
-	<sphere material="right">
-		<center vector3="-100004.0 -250 0.0" />
-		<radius double="100000.0" />
-	</sphere>
-	<sphere material="back">
-		<center vector3="0.0 0.0 100000.0" />
-		<radius double="99980.0" />
-	</sphere>
-	<sphere material="top">
-		<center vector3="0.0 150004.0 0.0" />
-		<radius double="150000.0" />
-	</sphere>
-	<sphere material="bottom">
-		<center vector3="0.0 -100004.0 0.0" />
-		<radius double="100000.0" />
-	</sphere>
-	<sphere material="front">
-		<center vector3="0.0 0.0 -100000.0" />
-		<radius double="100000.0" />
-	</sphere>	
-	<sphere material="mirror">
-		<center vector3="2.0 -2.5 17.0" />
-		<radius double="1.5" />
-	</sphere>
-	<sphere material="glass">
-		<center vector3="-2.0 -2.50 13.0" />
-		<radius double="1.5" />
-	</sphere>
+	<triangle material="left">
+		<vertex0 vector3="2.0 0.0 12.0" />
+		<vertex1 vector3="0.0 0.0 12.0" />
+		<vertex2 vector3="2.0 2.0 14.0" />
+	</triangle>
 </objects>
 
 <lights>
 	<arealight>
-		<center vector3="0.0 3.99 15.0" />
+		<center vector3="0.0 3.99 15.5" />
 		<radius double="2.0" />
 		<normal vector3="0.0 1.0 0.0" />
 		<num-samples int="1" />
