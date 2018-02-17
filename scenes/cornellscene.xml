@@ -129,14 +129,14 @@
 		<radius double="1.5" />
 	</sphere>
 	<sphere material="glass">
-		<center vector3="-2.0 -2.50 10.0" />
+		<center vector3="-2.0 -2.50 15.5" />
 		<radius double="1.5" />
 	</sphere>
 </objects>
 
 <lights>
 	<arealight>
-		<center vector3="0.0 3.99 15.5" />
+		<center vector3="0.0 3.99 13.5" />
 		<radius double="2.0" />
 		<normal vector3="0.0 1.0 0.0" />
 		<num-samples int="1" />

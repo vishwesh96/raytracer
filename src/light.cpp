@@ -1,5 +1,6 @@
 #include <iostream>
 #include <light.hpp>
+#include <random>
 
 using namespace rt;
 

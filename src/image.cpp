@@ -22,6 +22,7 @@
 */
 
 #include <image.hpp>
+#include <random>
 
 using namespace rt;
 

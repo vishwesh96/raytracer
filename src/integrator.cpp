@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <random>
 #include <integrator.hpp>
 
 using namespace rt;
@@ -150,20 +150,18 @@ color_t monte_carlo_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int
 		Eigen::Vector3d incident = _ray.direction.normalized();
 		double incident_dot_normal = incident.dot(normal);
 		Eigen::Vector3d reflected =  (incident - 2 * incident_dot_normal * normal).normalized();
-		Eigen::Vector3d transmitted;
+		Eigen::Vector3d transmitted(0.0, 0.0, 0.0);
 		ray_t transmitted_ray;
-		double nr=1.0;
 		bool tir = false;
 
-		if(incident_dot_normal > 0.0){		
-			if(mat->get_is_transmit()){
-				nr = mat->get_eta();
-			}
+		double nr = mat->get_eta();
+
+		if(incident_dot_normal > 0.0){	// inside to out
 			normal = -normal;
 			incident_dot_normal = -incident_dot_normal;
 		} else {
-			if(mat->get_is_transmit()){
-				nr = 1.0/mat->get_eta();
+			if(!is_zero(nr)){
+				nr = 1.0/nr;
 			}
 		}
 
@@ -174,23 +172,32 @@ color_t monte_carlo_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int
 		} else {			// TIR
 			tir = true;
 		}
-	
-		// std::list<light_t*>::const_iterator lit;
-		// for(lit=_scn->lits.begin(); lit!=_scn->lits.end(); lit++)
-		// {
-		// 	direct_illumination += (*lit)->direct(hitpt, normal, mat , _scn);
-		// }
 		
+		// pure reflecting surface like mirror
 		if(mat->get_is_reflect() || tir) 
 		{
 			ray_t reflected_ray(hitpt + BIAS*normal, reflected);
 			return radiance(_scn,reflected_ray,depth);
 		}
 
+		// pure transmitting surface like glass
 		if(mat->get_is_transmit()) 
 		{
 			transmitted_ray = ray_t(hitpt - BIAS * normal ,transmitted);
-			return radiance(_scn,transmitted_ray,depth);
+			ray_t reflected_ray(hitpt + BIAS*normal, reflected);
+
+			double cos_t = -transmitted.dot(normal);
+			double cos_i = -incident_dot_normal;
+			
+			double fr_perp = (nr*cos_i - cos_t) / (nr*cos_i + cos_t) ;
+			fr_perp  *= fr_perp;
+
+			double fr_parallel = (cos_i - nr * (cos_t) )/ (cos_i + nr * (cos_t) );
+			fr_parallel *= fr_parallel;
+
+			double re = (fr_parallel + fr_parallel )/2.0;
+
+			return re*radiance(_scn, reflected_ray, depth) + (1-re)*radiance(_scn,transmitted_ray,depth);
 
 		}
 		
@@ -201,6 +208,8 @@ color_t monte_carlo_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int
 		Eigen::Vector3d sample_brdf_direction;
 		Eigen::Vector3d sample_btdf_direction;
 		int diffuse = 0.0, specular = 0.0;
+
+		// DO either diffuse or specular for this ray
 		if( t < color_norm(kd)/(color_norm(kd) + color_norm(ks)))
 		{
 			diffuse = 1.0;
@@ -226,11 +235,12 @@ color_t monte_carlo_integrator_t::radiance(const scene_t* _scn, ray_t& _ray, int
 		color_t brdf_illumination = color_t(0.0);
 		color_t btdf_illumination = color_t(0.0);
 
+		// reflectance and transmittance brdf + btdf
 		if(reflectance.r() >= EPSILON || reflectance.g() >= EPSILON || reflectance.b() >= EPSILON)
 		{
 			brdf_illumination =  radiance(_scn, sampled_brdf_ray, depth);
 		}
-		if(transmittance.r() >= EPSILON || transmittance.g() >= EPSILON || transmittance.b() >= EPSILON)
+		if(transmittance.r() >= EPSILON || transmittance.g() >= EPSILON || transmittance.b() >= EPSILON) // If transmittance defined , eta needs to be defined properly
 		{
 			btdf_illumination = radiance(_scn, sampled_btdf_ray, depth);
 		}
